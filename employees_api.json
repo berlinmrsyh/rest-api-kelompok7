@@ -1,0 +1,191 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "REST API Karyawan",
+        "description": "API untuk manajemen data karyawan.",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Kelompok 7",
+            "email": "kelompok7@gmail.com",
+            "url": "https://github.com/feisauu/rest-api-kelompok7"
+        },
+        "license": {
+            "name": "Apache License 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "security": [
+        {
+            "ApiKeyAuth": []
+        }
+    ],
+    "servers": [
+        {
+            "url": "http://localhost/employee/",
+            "description": "Server pengembangan.",
+            "variables": {
+                "environment": {
+                    "default": "development",
+                    "description": "Rest API Data Karyawan",
+                    "enum": [
+                        "development",
+                        "production",
+                        "staging"
+                    ]
+                }
+            }
+        }
+    ],
+    "paths": {
+        "/employee/create": {
+          "post": {
+            "summary": "Membuat data karyawan baru",
+            "requestBody": {
+              "required": true,
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "position": {
+                        "type": "string"
+                      },
+                      "salary": {
+                        "type": "number"
+                      }
+                    },
+                    "required": ["name", "email", "position", "salary"]
+                  }
+                }
+              }
+            },
+            "responses": {
+              "201": {
+                "description": "Data berhasil dibuat."
+              },
+              "500": {
+                "description": "Error dalam membuat data."
+              }
+            }
+          }
+        },
+        "/employee/put": {
+            "put": {
+                "summary": "Memperbarui data karyawan",
+                "description": "Endpoint untuk memperbarui data karyawan.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["id", "name"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data berhasil diperbarui."
+                    },
+                    "400": {
+                        "description": "Error dalam memperbarui data."
+                    }
+                }
+            }
+        },    
+         "/employee/delete": {
+            "delete": {
+                "summary": "Menghapus data karyawan",
+                "description": "Endpoint untuk menghapus data karyawan.",
+                "responses": {
+                    "200": {
+                        "description": "Data berhasil dihapus."
+                    },
+                    "400": {
+                        "description": "Error dalam menghapus data."
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["id"]
+                            }
+                        }
+                    }
+                }
+            }
+        },   
+        "/employee/get": {
+            "get": {
+                "summary": "Mendapatkan semua data karyawan",
+                "description": "Endpoint untuk mendapatkan semua data karyawan.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "employees": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "Nama karyawan."
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "description": "Email karyawan."
+                                                    },
+                                                    "position": {
+                                                        "type": "string",
+                                                        "description": "Posisi karyawan."
+                                                    },
+                                                    "salary": {
+                                                        "type": "number",
+                                                        "description": "Gaji karyawan."
+                                                    }
+                                                },
+                                                "required": ["name", "email", "position", "salary"]
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error dalam mendapatkan data."
+                    }
+                }
+            }
+        }
+    }
+}
